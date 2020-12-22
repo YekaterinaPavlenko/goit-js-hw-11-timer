@@ -1,0 +1,18 @@
+[
+  {
+    "data-value": "days",
+    "label": "Days"
+  },
+  {
+    "data-value": "hours",
+    "label": "Hours"
+  },
+  {
+    "data-value": "mins",
+    "label": "Minutes"
+  },
+  {
+    "data-value": "secs",
+    "label": "Seconds"
+  }
+]
