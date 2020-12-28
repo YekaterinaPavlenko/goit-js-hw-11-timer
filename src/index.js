@@ -3,22 +3,42 @@ import timerList from './timer.json';
 import './styles.css';
 
 const bodyRef = document.querySelector('.body');
-// const buttonRef = document.querySelector('ul.button');
+const btnStart = document.querySelector('button[data-action=start]');
+const btnStop = document.querySelector('button[data-action=stop]');
 
 bodyRef.insertAdjacentHTML('afterbegin', timerTpl(timerList));
-const timerRef = document.getElementById('#timer-1');
+const daysRef = document.querySelector('[data-value=days]');
+const hoursRef = document.querySelector('[data-value=hours]');
+const minsRef = document.querySelector('[data-value=mins]');
+const secsRef = document.querySelector('[data-value=secs]');
 
 const CountdownTimer = {
+  intervalId: null,
+  isActive: false,
   start() {
+    if (this.isActive) {
+      return;
+    }
+    this.isActive = true;
     const startTime = Date.now();
-    setInterval(() => {
+    // console.log(startTime);
+    const targetDay = new Date('Jan 1, 2021');
+    this.intervalId = setInterval(() => {
       const currentTime = Date.now();
-      const deltaTime = startTime - currentTime;
+      const deltaTime = targetDay - currentTime;
       updateClockFace(deltaTime);
     }, 1000);
   },
+  stop() {
+    this.isActive = false;
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+    updateClockFace(0);
+  },
 };
-CountdownTimer.start();
+btnStart.addEventListener('click', CountdownTimer.start.bind(CountdownTimer));
+btnStop.addEventListener('click', CountdownTimer.stop.bind(CountdownTimer));
+
 function updateClockFace(time) {
   const days = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
   const hours = pad(
@@ -26,38 +46,11 @@ function updateClockFace(time) {
   );
   const mins = pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
   const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
-  // timerRef.
+  daysRef.textContent = days;
+  hoursRef.textContent = hours;
+  minsRef.textContent = mins;
+  secsRef.textContent = secs;
 }
 function pad(value) {
   return String(value).padStart(2, '0');
 }
-// new CountdownTimer({
-//   selector: '#timer-1',
-//   targetDate: new Date('Jul 17, 2019'),
-// });
-
-// const buttonStartRef = document.querySelector('button.start');
-// const buttonStopRef = document.querySelector('button.stop');
-
-// buttonStartRef.addEventListener('click', changeColor);
-// buttonStopRef.addEventListener('click', stopChangeColor);
-
-// let changeColorWithInterval = null;
-// function changeColor(event) {
-//   event.preventDefault();
-//   buttonStartRef.setAttribute('disabled', true);
-//   const randomColor = (min, max) => {
-//     return Math.floor(Math.random() * (max - min + 1) + min);
-//   };
-//   changeColorWithInterval = setInterval(() => {
-//     randomColor(0, 5);
-//     bodyRef.style.backgroundColor = colors[randomColor(0, 5)];
-//     // console.log(colors[randomColor(0, 5)]);
-//   }, 1000);
-// }
-
-// function stopChangeColor(event) {
-//   buttonStartRef.removeAttribute('disabled', true);
-//   event.preventDefault();
-//   clearInterval(changeColorWithInterval);
-// }
