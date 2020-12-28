@@ -22,7 +22,7 @@ const CountdownTimer = {
     this.isActive = true;
     const startTime = Date.now();
     // console.log(startTime);
-    const targetDay = new Date('Jan 1, 2021');
+    const targetDay = new Date('Jan 25, 2021');
     this.intervalId = setInterval(() => {
       const currentTime = Date.now();
       const deltaTime = targetDay - currentTime;

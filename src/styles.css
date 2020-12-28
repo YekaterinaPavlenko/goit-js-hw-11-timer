@@ -20,6 +20,11 @@ body {
   background-color: #fff;
   color: #333333;
 }
+p {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+}
 .button-box {
   display: flex;
   justify-content: center;
