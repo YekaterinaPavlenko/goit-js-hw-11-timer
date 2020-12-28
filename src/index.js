@@ -5,7 +5,36 @@ import './styles.css';
 const bodyRef = document.querySelector('.body');
 // const buttonRef = document.querySelector('ul.button');
 
-bodyRef.insertAdjacentHTML('beforeend', timerTpl(timerListJgznm));
+bodyRef.insertAdjacentHTML('afterbegin', timerTpl(timerList));
+const timerRef = document.getElementById('#timer-1');
+
+const CountdownTimer = {
+  start() {
+    const startTime = Date.now();
+    setInterval(() => {
+      const currentTime = Date.now();
+      const deltaTime = startTime - currentTime;
+      updateClockFace(deltaTime);
+    }, 1000);
+  },
+};
+CountdownTimer.start();
+function updateClockFace(time) {
+  const days = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
+  const hours = pad(
+    Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+  );
+  const mins = pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
+  const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
+  // timerRef.
+}
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
+// new CountdownTimer({
+//   selector: '#timer-1',
+//   targetDate: new Date('Jul 17, 2019'),
+// });
 
 // const buttonStartRef = document.querySelector('button.start');
 // const buttonStopRef = document.querySelector('button.stop');
