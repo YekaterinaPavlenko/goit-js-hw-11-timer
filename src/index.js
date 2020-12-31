@@ -21,6 +21,17 @@ class CountdownTimer {
     console.log(this.deltaTime);
     console.log(this.targetDate);
   }
+  setDeltaTime() {
+    const currentTime = Date.now();
+    // console.log(this.targetDate);
+    if (currentTime > this.targetDate) {
+      this.deltaTime = currentTime - this.targetDate;
+    } else if (currentTime < this.targetDate) {
+      this.deltaTime = this.targetDate - currentTime;
+    }
+
+    updateClockFace(this.deltaTime);
+  }
 
   start() {
     if (this.isActive) {
@@ -28,19 +39,11 @@ class CountdownTimer {
     }
     this.isActive = true;
     const startTime = Date.now();
-    updateClockFace(this.deltaTime);
+    this.setDeltaTime();
     // console.log(startTime);
 
     this.intervalId = setInterval(() => {
-      const currentTime = Date.now();
-      // console.log(this.targetDate);
-      if (currentTime > this.targetDate) {
-        this.deltaTime = currentTime - this.targetDate;
-      } else if (currentTime < this.targetDate) {
-        this.deltaTime = this.targetDate - currentTime;
-      }
-
-      updateClockFace(this.deltaTime);
+      this.setDeltaTime();
       console.log(this.deltaTime);
     }, 1000);
     // console.log(this.deltaTime);
